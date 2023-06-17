@@ -6,11 +6,9 @@ const getAll = async (req, res, next) => {
 }
 
 // const getAllByType = async (req, res, next) => {
-//     const { type } = req.params;
-//     console.log(type);
-//     const result = await Product.find({}, "-createdAt -updatedAt");
-//     console.log(result);
-//     const filteredProducts = result.filter((prod) => prod.type === type);
+//     const { category } = req.params;
+//     const result = await Product.find();
+//     const filteredProducts = result.filter((prod) => prod.type === category);
 //     res.json(filteredProducts);
 // };
 
@@ -23,7 +21,7 @@ const getById = async (req, res, next) => {
     res.json(result)
 }
 
-export const addProduct = async (req, res, next) => {
+const addProduct = async (req, res, next) => {
  const result = await Product.create(req.body)
  res.status(201).json(result)
 }

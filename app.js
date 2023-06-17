@@ -1,13 +1,9 @@
 import express from "express"
-import bcrypt from "bcrypt"
-import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
 import cors from 'cors';
 import logger from 'morgan';
-import { validationResult } from 'express-validator';
-import { registerValidation } from './validations/auth.js';
-// import userModel from './models/user.js'
-import {router as productsRouter} from './routes/api/products.js'
+import {productsRouter} from './routes/api/products.js'
+import { authRouter } from "./routes/api/auth.js";
 dotenv.config()
 
 
@@ -20,6 +16,7 @@ const formatsLogger = app.get('env') === 'development' ? 'dev' : 'short'
 app.use(logger(formatsLogger))
 
 app.use('/api/products', productsRouter)
+app.use('/api/auth', authRouter)
 
 // універсальний обробник помилок
 app.use((req, res)=>{
@@ -33,42 +30,7 @@ app.use((err, req, res, next) => {
 
 
 
-// app.post('/auth/register', registerValidation, async (req, res) => {
-//     try {
-//         const errors = validationResult(req)
-//         if (!errors.isEmpty()) return res.status(400).json(errors.array())
 
-//         const password = req.body.password
-//         const salt = await bcrypt.genSalt(10)
-//         const hash = await bcrypt.hash(password, salt)
-
-//         const doc = new userModel({
-//             fullName: req.body.fullName,
-//             email: req.body.email,
-//             avatarUrl: req.body.avatarUrl,
-//             passwordHash: hash,
-//         })
-
-//         const user = await doc.save()
-
-//         const token = jwt.sign({
-//             _id: user._id,
-//         }, 'secret123', {
-//             expiresIn: '30d',
-//         })
-
-//         const { passwordHash, ...userData } = user._doc;
-
-//         res.json({
-//             ...userData,
-//             token,
-//         });
-//     } catch (error) {
-//         res.status(500).json({
-//             message: 'Failed to register'
-//         })
-//     }
-// });
 
 // app.post('/auth/login', async (req, res)=>{
 //     try {

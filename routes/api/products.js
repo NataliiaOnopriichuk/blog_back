@@ -2,10 +2,10 @@ import express from 'express'
 import { productsController } from '../../controllers/productsController.js'
 import { ctrlWrapper } from '../../helpers/ctrlWrapper.js'
 
-export const router = express.Router()
+export const productsRouter = express.Router()
 
-router.get('/', ctrlWrapper(productsController.getAll) )
-router.get('/:id', ctrlWrapper(productsController.getById) )
-router.post('/', ctrlWrapper(productsController.addProduct) )
-router.delete('/:id', ctrlWrapper(productsController.deleteById) )
-// router.get('/:type', ctrlWrapper(productsController.getAllByType) )
+productsRouter.get('/', ctrlWrapper(productsController.getAll) )
+productsRouter.get('/:id', ctrlWrapper(productsController.getById) )
+productsRouter.post('/', ctrlWrapper(productsController.addProduct) )
+productsRouter.delete('/:id', ctrlWrapper(productsController.deleteById) )
+// router.get('/:category', ctrlWrapper(productsController.getAllByType) )
