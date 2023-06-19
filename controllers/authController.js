@@ -6,7 +6,6 @@ import { User } from '../models/User.js';
 import { RequestError } from '../helpers/RequestError.js';
 
 
-
 const register = async (req, res, next) => {
     const {email, name, password} = req.body
     const existingUser = await User.findOne({email})
@@ -38,14 +37,33 @@ const login = async (req, res, next) => {
             throw RequestError(401, `Invalid email or password`)
         }
 
-        const token = 'hgghcfg.hgbhvhgfvgf.hbjvbghvgfh'
+        const payload = {
+            id: existingUser._id
+        }
+
+
+        const {TOKEN_KEY} = process.env
+
+        const token = jwt.sign(payload, TOKEN_KEY, {expiresIn:"1h"})
+
+        await User.findByIdAndUpdate(existingUser._id, {token})
 
         res.json({
             token
         })
 };
 
+const logout = async(req, res, json) => {
+const {_id} = req.user
+await User.findByIdAndUpdate(_id, {token: ''})
+
+res.json({
+    message: 'Logout successful'
+})
+}
+
 export const authController = {
     register,
-    login
+    login,
+    logout
 }

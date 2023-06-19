@@ -1,16 +1,16 @@
 import { Product } from "../models/product.js"
 
 const getAll = async (req, res, next) => {
-    const result = await Product.find({}, "-createdAt -updatedAt")
+    const {id: owner} = req.user
+    const {type} = req.query
+    const filter = {owner}
+    if(type){
+   filter.type = type
+    }
+    const result = await Product.find(filter, "-createdAt -updatedAt").populate('owner', 'name email')
     res.json(result)
 }
 
-// const getAllByType = async (req, res, next) => {
-//     const { category } = req.params;
-//     const result = await Product.find();
-//     const filteredProducts = result.filter((prod) => prod.type === category);
-//     res.json(filteredProducts);
-// };
 
 const getById = async (req, res, next) => {
     const { id } = req.params
@@ -22,7 +22,8 @@ const getById = async (req, res, next) => {
 }
 
 const addProduct = async (req, res, next) => {
- const result = await Product.create(req.body)
+  const {id: owner} = req.user
+ const result = await Product.create({...req.body, owner})
  res.status(201).json(result)
 }
 
@@ -38,7 +39,6 @@ const deleteById = async (req, res, next) => {
 
 export const productsController = {
     getAll,
-    // getAllByType,
     getById,
     addProduct,
     deleteById

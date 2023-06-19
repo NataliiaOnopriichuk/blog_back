@@ -4,12 +4,17 @@ const ProductSchema = new Schema({
     name: {
         type: String,
         required: true,
-        unique: true,
+        unique: true
     },
     type: {
         type: String,
         required: true,
-        enum: ['food', 'chemicals', 'cosmetics'],
+        enum: ['food products', 'household chemicals', 'cosmetics'],
+    },
+    owner: {
+        type: Schema.Types.ObjectId,
+        required: true,
+        ref: 'user'
     },
 },
 {
