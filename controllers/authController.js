@@ -1,9 +1,7 @@
-import { validationResult } from 'express-validator';
-// import { registerValidation } from './validations/auth.js';
 import bcrypt from "bcrypt"
 import jwt from 'jsonwebtoken';
 import { User } from '../models/User.js';
-import { RequestError } from '../helpers/RequestError.js';
+import { RequestError } from "../helpers/index.js";
 
 
 const register = async (req, res, next) => {
@@ -44,7 +42,7 @@ const login = async (req, res, next) => {
 
         const {TOKEN_KEY} = process.env
 
-        const token = jwt.sign(payload, TOKEN_KEY, {expiresIn:"1h"})
+        const token = jwt.sign(payload, TOKEN_KEY, {expiresIn: "30d"})
 
         await User.findByIdAndUpdate(existingUser._id, {token})
 

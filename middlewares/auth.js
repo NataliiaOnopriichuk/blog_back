@@ -1,6 +1,6 @@
-import { RequestError } from "../helpers/RequestError.js"
 import jwt from 'jsonwebtoken';
 import { User } from "../models/User.js";
+import { RequestError } from '../helpers/index.js';
 
 
 export const auth = async (req, res, next) => {

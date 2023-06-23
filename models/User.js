@@ -3,6 +3,7 @@ import {Schema, model} from "mongoose"
 const userSchema = new Schema({
     name: {
         type: String,
+        minlength: 3,
         required: true,
     },
     email: {

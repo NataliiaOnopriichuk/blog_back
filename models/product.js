@@ -16,6 +16,10 @@ const ProductSchema = new Schema({
         required: true,
         ref: 'user'
     },
+    imageUrl: {
+        type: String,
+        default: 'https://s1.zhovta.info/storage/resized/5058f1af8388633f609cadb75a75dc9d/405x240/.default.png',
+    },
 },
 {
     versionKey: false,
